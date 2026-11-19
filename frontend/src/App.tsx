@@ -1,7 +1,18 @@
 
+import { Route, Routes } from 'react-router'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
 import { LatestReleases } from './components/LatestReleases'
+import { StoryDetails } from './pages/StoryDetails'
+
+function Home() {
+  return (
+    <>
+      <Hero />
+      <LatestReleases />
+    </>
+  )
+}
 
 function App() {
   return (
@@ -9,8 +20,13 @@ function App() {
       <Header />
 
       <main>
-        <Hero />
-        <LatestReleases />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/historias/:slug"
+            element={<StoryDetails />}
+          />
+        </Routes>
       </main>
     </div>
   )
