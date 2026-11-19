@@ -51,10 +51,10 @@ const stories: Story[] = [
 export function LatestReleases() {
   return (
     <section
-      id="explorar"
-      className="bg-[#101010] py-12"
+  id="explorar"
+  className="bg-[#101010] py-10 sm:py-12 lg:py-14"
     >
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Cabeçalho da seção */}
         <div className="mb-8 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -75,7 +75,7 @@ export function LatestReleases() {
         </div>
 
         {/* Cards das histórias */}
-        <div className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4 xl:grid-cols-5 xl:gap-x-6">
           {stories.map((story) => (
             <StoryCard
               key={story.id}
