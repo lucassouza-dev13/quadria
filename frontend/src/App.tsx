@@ -1,6 +1,7 @@
 
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
+import { LatestReleases } from './components/LatestReleases'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
 
       <main>
         <Hero />
+        <LatestReleases />
       </main>
     </div>
   )
