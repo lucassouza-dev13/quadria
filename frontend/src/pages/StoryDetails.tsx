@@ -136,27 +136,30 @@ export function StoryDetails() {
         </div>
 
         <div className="overflow-hidden rounded-xl border border-white/10 bg-[#191919]">
-          {story.chapters.map((chapter, index) => (
-            <div
-              key={chapter.id}
-              className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-5 last:border-b-0"
-            >
-              <div className="min-w-0">
-                <p className="text-sm text-gray-400">
-                  Capítulo {index + 1}
-                </p>
+          
+{story.chapters.map((chapter, index) => (
+  <Link
+    key={chapter.id}
+    to={`/historias/${story.slug}/capitulos/${chapter.id}`}
+    className="group flex items-center justify-between gap-4 border-b border-white/10 px-5 py-5 transition-colors duration-200 last:border-b-0 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-yellow-400"
+  >
+    <div className="min-w-0">
+      <p className="text-sm text-gray-400">
+        Capítulo {index + 1}
+      </p>
 
-                <h3 className="mt-1 font-semibold text-white">
-                  {chapter.title}
-                </h3>
-              </div>
+      <h3 className="mt-1 font-semibold text-white transition-colors group-hover:text-yellow-400">
+        {chapter.title}
+      </h3>
+    </div>
 
-              <ChevronRight
-                size={20}
-                className="shrink-0 text-gray-500"
-              />
-            </div>
-          ))}
+    <ChevronRight
+      size={20}
+      className="shrink-0 text-gray-500 transition-all duration-200 group-hover:translate-x-1 group-hover:text-yellow-400"
+    />
+    </Link>
+    ))}
+
         </div>
       </div>
     </section>
