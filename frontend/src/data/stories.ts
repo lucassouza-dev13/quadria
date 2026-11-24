@@ -11,6 +11,7 @@ export type Story = {
   chapters: {
     id: number
     title: string
+    pages?: string[]
   }[]
 }
 
@@ -88,9 +89,25 @@ export const stories: Story[] = [
       'Após perder seu mestre, um samurai errante atravessa terras perigosas em busca de respostas, enquanto enfrenta os fantasmas de seu passado.',
     status: 'Concluída',
     chapters: [
-      { id: 1, title: 'O Caminho Solitário' },
-      { id: 2, title: 'Sombras do Passado' },
-      { id: 3, title: 'A Última Batalha' },
+      {
+        id: 1,
+        title: 'O Caminho Solitário',
+        pages: [
+          '/chapters/o-ultimo-ronin/capitulo-1/01.webp',
+          '/chapters/o-ultimo-ronin/capitulo-1/02.webp',
+          '/chapters/o-ultimo-ronin/capitulo-1/03.webp',
+          '/chapters/o-ultimo-ronin/capitulo-1/04.webp',
+          '/chapters/o-ultimo-ronin/capitulo-1/05.webp',
+        ],
+      },
+      {
+        id: 2,
+        title: 'Sombras do Passado',
+      },
+      {
+        id: 3,
+        title: 'A Última Batalha',
+      },
     ],
   },
 ]
