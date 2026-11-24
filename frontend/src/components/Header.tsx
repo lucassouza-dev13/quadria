@@ -1,4 +1,5 @@
 
+import { Link, NavLink } from 'react-router'
 import {
   Bell,
   Bookmark,
@@ -13,22 +14,28 @@ export function Header() {
       <div className="mx-auto flex min-h-[80px] max-w-7xl items-center justify-between gap-6 px-6">
 
         {/* Logo */}
-        <a
-          href="/"
+        <Link
+          to="/"
           className="shrink-0 text-3xl font-black tracking-tight text-white"
         >
           quadria<span className="text-yellow-400">.</span>
-        </a>
+        </Link>
 
         {/* Navegação */}
         <nav className="hidden h-[80px] items-center gap-8 text-sm font-medium text-gray-300 md:flex">
-          <a
-            href="/"
-            aria-current="page"
-            className="relative flex h-full items-center text-white after:absolute after:bottom-4 after:left-0 after:h-[2px] after:w-full after:bg-yellow-400"
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              `relative flex h-full items-center transition ${
+                isActive
+                  ? 'text-white after:absolute after:bottom-4 after:left-0 after:h-[2px] after:w-full after:bg-yellow-400'
+                  : 'hover:text-yellow-400'
+              }`
+            }
           >
             Início
-          </a>
+          </NavLink>
 
           <a
             href="#explorar"
@@ -67,19 +74,32 @@ export function Header() {
             className="inline-flex items-center gap-2 rounded-xl bg-yellow-400 px-5 py-3 text-sm font-bold text-black transition hover:bg-yellow-300"
           >
             <Plus size={18} strokeWidth={2.5} />
+
             <span className="hidden sm:inline">
               Publicar história
             </span>
           </button>
 
-          <button
-            type="button"
+          {/* Biblioteca */}
+          <NavLink
+            to="/biblioteca"
             aria-label="Minha biblioteca"
             title="Minha biblioteca"
-            className="text-gray-300 transition hover:text-yellow-400"
+            className={({ isActive }) =>
+              `transition ${
+                isActive
+                  ? 'text-yellow-400'
+                  : 'text-gray-300 hover:text-yellow-400'
+              }`
+            }
           >
-            <Bookmark size={21} />
-          </button>
+            {({ isActive }) => (
+              <Bookmark
+                size={21}
+                fill={isActive ? 'currentColor' : 'none'}
+              />
+            )}
+          </NavLink>
 
           <button
             type="button"

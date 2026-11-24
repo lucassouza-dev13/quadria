@@ -1,17 +1,22 @@
 
+import { useState } from 'react'
 import { Link, useParams } from 'react-router'
 import {
   ArrowLeft,
   BookOpen,
   Bookmark,
+  BookmarkCheck,
   ChevronRight,
   UserRound,
   List,
 } from 'lucide-react'
 import { stories } from '../data/stories'
+import { getLibrary, toggleLibrary } from '../lib/library'
 
 export function StoryDetails() {
   const { slug } = useParams()
+
+  const [library, setLibrary] = useState<string[]>(getLibrary)
 
   const story = stories.find((item) => item.slug === slug)
 
@@ -35,6 +40,14 @@ export function StoryDetails() {
         </Link>
       </section>
     )
+  }
+
+  const saved = library.includes(story.slug)
+  const firstChapter = story.chapters[0]
+
+  function handleToggleLibrary(storySlug: string) {
+    toggleLibrary(storySlug)
+    setLibrary(getLibrary())
   }
 
   return (
@@ -82,6 +95,7 @@ export function StoryDetails() {
 
           <div className="mt-6 flex items-center gap-2 text-sm text-gray-400">
             <BookOpen size={18} />
+
             <span>
               {story.chapters.length} capítulos cadastrados
             </span>
@@ -98,24 +112,49 @@ export function StoryDetails() {
 
           {/* Ações */}
           <div className="mt-8 flex flex-wrap gap-3">
-            <button
-              type="button"
-              disabled
-              title="Leitura disponível futuramente"
-              className="inline-flex cursor-not-allowed items-center gap-2 rounded-xl bg-yellow-400/60 px-6 py-3 font-bold text-black opacity-70"
-            >
-              <BookOpen size={19} />
-              Começar a ler
-            </button>
+            {firstChapter ? (
+              <Link
+                to={`/historias/${story.slug}/capitulos/${firstChapter.id}`}
+                className="inline-flex items-center gap-2 rounded-xl bg-yellow-400 px-6 py-3 font-bold text-black transition hover:bg-yellow-300"
+              >
+                <BookOpen size={19} />
+                Começar a ler
+              </Link>
+            ) : (
+              <button
+                type="button"
+                disabled
+                className="inline-flex cursor-not-allowed items-center gap-2 rounded-xl bg-yellow-400/60 px-6 py-3 font-bold text-black opacity-70"
+              >
+                <BookOpen size={19} />
+                Sem capítulos disponíveis
+              </button>
+            )}
 
             <button
               type="button"
-              disabled
-              title="Biblioteca disponível futuramente"
-              className="inline-flex cursor-not-allowed items-center gap-2 rounded-xl border border-white/20 px-6 py-3 font-medium text-gray-400"
+              aria-pressed={saved}
+              title={
+                saved
+                  ? 'Remover da biblioteca'
+                  : 'Adicionar à biblioteca'
+              }
+              onClick={() => handleToggleLibrary(story.slug)}
+              className={`inline-flex cursor-pointer items-center gap-2 rounded-xl border px-6 py-3 font-medium transition ${
+                saved
+                  ? 'border-yellow-400/50 bg-yellow-400/10 text-yellow-400 hover:bg-yellow-400/20'
+                  : 'border-white/20 text-white hover:border-yellow-400/50 hover:text-yellow-400'
+              }`}
             >
-              <Bookmark size={19} />
-              Adicionar à biblioteca
+              {saved ? (
+                <BookmarkCheck size={19} />
+              ) : (
+                <Bookmark size={19} />
+              )}
+
+              {saved
+                ? 'Na minha biblioteca'
+                : 'Adicionar à biblioteca'}
             </button>
           </div>
         </div>
@@ -136,30 +175,28 @@ export function StoryDetails() {
         </div>
 
         <div className="overflow-hidden rounded-xl border border-white/10 bg-[#191919]">
-          
-{story.chapters.map((chapter, index) => (
-  <Link
-    key={chapter.id}
-    to={`/historias/${story.slug}/capitulos/${chapter.id}`}
-    className="group flex items-center justify-between gap-4 border-b border-white/10 px-5 py-5 transition-colors duration-200 last:border-b-0 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-yellow-400"
-  >
-    <div className="min-w-0">
-      <p className="text-sm text-gray-400">
-        Capítulo {index + 1}
-      </p>
+          {story.chapters.map((chapter) => (
+            <Link
+              key={chapter.id}
+              to={`/historias/${story.slug}/capitulos/${chapter.id}`}
+              className="group flex items-center justify-between gap-4 border-b border-white/10 px-5 py-5 transition-colors duration-200 last:border-b-0 hover:bg-white/5 focus-visible:outline-2 focus-visible:outline-yellow-400"
+            >
+              <div className="min-w-0">
+                <p className="text-sm text-gray-400">
+                  Capítulo {chapter.id}
+                </p>
 
-      <h3 className="mt-1 font-semibold text-white transition-colors group-hover:text-yellow-400">
-        {chapter.title}
-      </h3>
-    </div>
+                <h3 className="mt-1 font-semibold text-white transition-colors group-hover:text-yellow-400">
+                  {chapter.title}
+                </h3>
+              </div>
 
-    <ChevronRight
-      size={20}
-      className="shrink-0 text-gray-500 transition-all duration-200 group-hover:translate-x-1 group-hover:text-yellow-400"
-    />
-    </Link>
-    ))}
-
+              <ChevronRight
+                size={20}
+                className="shrink-0 text-gray-500 transition-all duration-200 group-hover:translate-x-1 group-hover:text-yellow-400"
+              />
+            </Link>
+          ))}
         </div>
       </div>
     </section>

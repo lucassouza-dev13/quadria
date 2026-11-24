@@ -5,6 +5,7 @@ import { Hero } from './components/Hero'
 import { LatestReleases } from './components/LatestReleases'
 import { StoryDetails } from './pages/StoryDetails'
 import { ChapterReader } from './pages/ChapterReader'
+import { Library } from './pages/Library'
 
 function Home() {
   return (
@@ -32,6 +33,9 @@ function App() {
           <Route
             path="/historias/:slug/capitulos/:chapterId"
             element={<ChapterReader />}
+          />
+
+          <Route path="/biblioteca" element={<Library />} 
           />
         </Routes>
       </main>
