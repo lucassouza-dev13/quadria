@@ -6,6 +6,7 @@ import { LatestReleases } from './components/LatestReleases'
 import { StoryDetails } from './pages/StoryDetails'
 import { ChapterReader } from './pages/ChapterReader'
 import { Library } from './pages/Library'
+import { Explore } from "./pages/Explore";
 
 function Home() {
   return (
@@ -36,6 +37,9 @@ function App() {
           />
 
           <Route path="/biblioteca" element={<Library />} 
+          />
+
+          <Route path="/explorar" element={<Explore />} 
           />
         </Routes>
       </main>
