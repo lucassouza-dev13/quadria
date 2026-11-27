@@ -1,4 +1,4 @@
-
+import importedChapters from './importedChapters.json'
 export type Story = {
   id: number
   slug: string
@@ -15,8 +15,7 @@ export type Story = {
   }[]
 }
 
-export const stories: Story[] = [
-  {
+const baseStories: Story[] = [  {
     id: 1,
     slug: 'sombras-do-abismo',
     title: 'Sombras do Abismo',
@@ -111,3 +110,21 @@ export const stories: Story[] = [
     ],
   },
 ]
+
+type ImportedChapters = Record<
+  string,
+  Record<string, string[]>
+>
+
+const chapterManifest = importedChapters as ImportedChapters
+
+export const stories: Story[] = baseStories.map((story) => ({
+  ...story,
+  chapters: story.chapters.map((chapter) => ({
+    ...chapter,
+    pages:
+      chapter.pages?.length
+        ? chapter.pages
+        : chapterManifest[story.slug]?.[String(chapter.id)],
+  })),
+}))
